@@ -1,0 +1,2 @@
+# jatszos
+aktualis jatszos
