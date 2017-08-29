@@ -35,3 +35,8 @@ with open("cpv_cpv_network_by_notice.csv", "wb") as output:
         aktualis_notice = notice
 
 f.close()
+
+cpv_cpv_net = pd.read_csv("cpv_cpv_network_by_notice.csv", encoding = "utf-8", skiprows=1, sep = ",")
+cpv_cpv_net.columns = ["fo_kategoria1", "fo_kategoria2"]
+cpv_cpv_net_dedupl = cpv_cpv_net.groupby(by=["fo_kategoria1", "fo_kategoria2"]).size().reset_index()
+cpv_cpv_net_dedupl.to_csv("cpv_cpv_network_by_notice_deduplicated.csv", encoding = "utf-8", sep = "\t", index = False)
