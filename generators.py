@@ -1,3 +1,4 @@
+############ ez nem mukodik ####################
 amount = 1000
 new_amount = 0
 
@@ -16,3 +17,20 @@ for i in b:
 
 print(count)
 
+############ ez mukodik ####################
+"""
+def whatever(interest, amount, aim):  
+    count = 1
+    while (aim > amount):
+        amount = amount * ((interest+100) / 100)   
+        count += 1
+    print(count)
+
+
+whatever(3, 1000, 2000)
+
+wifi.ub.edu
+
+agvzhh.tmp
+bkiq78
+"""
