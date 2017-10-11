@@ -28,9 +28,4 @@ def whatever(interest, amount, aim):
 
 
 whatever(3, 1000, 2000)
-
-wifi.ub.edu
-
-agvzhh.tmp
-bkiq78
 """
