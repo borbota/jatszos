@@ -1,0 +1,293 @@
+df[df.ColumnA == "whatever"]
+- returns rows where ColumnA is whatever
+
+df.loc["index", "columna"]
+- returns the value matching the given index and given columna
+
+df.describe()
+- returns basic stats by column
+
+***************
+LOC - filtering rows and coluns by label name
+- inclusive for both sides
+
+df.loc[0,:]
+- returns first row, all columns (series)
+
+df.loc[0:2, :]
+- returns first three rows, all columns (df)
+
+df.loc[:, "columna"]
+- returns all rows for columna (series)
+
+df.loc[:, ["columna", "columnb"]]
+- returns all rows, column a and b (df)
+
+df.loc[:, ["columna":"columnz"]]
+- returns all rows, columns from a to z (df)
+
+df.loc[df.columna == "whatever"]
+- returns all rows, where columna is whatever
+
+df.loc[df.columna == "whatever"].columnb
+- returns columnb only where columna is whatever (= chained indexing)
+
+df.loc[df.columna == "whatever", "columnb"]
+- returns columnb only where columna is whatever (better solution than the one above)
+
+use several where:
+df.loc[(df["B"] > 50) & (df["C"] == 900), "A"]
+
+***************
+ILOC - filtering rows and columns by integer position
+- exclusive for second value
+
+df.iloc[:, [0,3]]
+- returns all rows, and columns 1th and 2nd
+
+df.iloc[:, 0:4]
+returns all rows from 1st to 3rd column
+
+***************
+IX - filtering rows and columns mixing labels and integer positions
+its better not to use this.
+
+df.ix["index label", 0]
+- returns first column value for given row
+
+df.ix[1,"columna"]
+
+
+df.index.name = None
+
+merged = pd.merge(df_new, df_n, left_on='subject_id', right_on='subject_id', how = 'left')
+
+new_header = housing_2000.iloc[0] #grab the first row for the header
+    housing_2000 = housing_2000[1:] #take the data less the header row
+
+*********
+legnth of df: len(df.index)
+
+list of column names: list(my_dataframe.columns.values)
+
+merge(left, right, how='inner', on=None, left_on=user, right_on=Id, left_index=False, right_index=False, sort=True, suffixes=('_x', '_y'), copy=True, indicator=False)
+
+outer =!
+
+pd.merge(utak, ertekelesek, how='inner', on=None, left_on='Id', right_on='user', left_index=True, right_index=False, sort=False, copy=False)
+
+pd.merge(user, ert, left_on='user_id', right_on = 'user', how='outer')
+
+
+df['x'].str.lower()
+
+df = pd.DataFrame(['a|b', 'c|d'])
+
+s = df[0].apply(lambda x: x.split('|'))
+
+df['left'] = s.apply(lambda x: x[0])
+
+df['right'] = s.apply(lambda x: x[1])
+
+df.drop(df[df.ColumnA == "string"].index)
+
+delete rows with missing values in given row:
+data.dropna(subset = ['columnA'])
+
+Peti 
+# ezt kellene hasznalni
+plot
+data.groupby(['year']).agg({'id':'count', 'final':'sum'}).plot(kind = 'bar')
+
+groupby several values:
+df = df.groupby(['pidx','pidy']).agg({'flag':'first', 'count':'sum'}).reset_index()
+
+normalized:
+data["final_norm"] = (data["final"] - data["final"].min()) / (data["final"].max()-data["final"].min())
+
+def rescale(input_array):
+    L = numpy.min(input_array)
+    H = numpy.max(input_array)
+    output_array = (input_array - L) / (H - L)
+    return output_array
+
+*********
+looking for partial string:
+df[df['A'].str.contains("hello")]
+
+ignore NaNs:
+df.loc[df.a.str.contains("foo", na=False)]
+
+case insensitive:
+gtin[gtin['BRAND_NAME'].str.contains("AZDent", case = False)]
+
+list of columns
+list(my_dataframe.columns.values)
+
+remove whitespaces from header
+shorter.rename(columns=lambda x: x.replace(" ", "_"), inplace=True)
+
+count values of column
+data['columnA'].value_counts()
+
+with index sorted:
+data['columnA'].value_counts().sort_index()
+
+convert str to date:
+df['col'] = pd.to_datetime(df['col'])
+
+to_datetime(shorter['Day'])
+
+groupby sum:
+data.groupby(by=['account_ID'])['purchases'].sum()
+
+move columns
+df = df[['a', 'y', 'b', 'x']]
+
+count distinict
+len(data["columnA"].unique())
+
+show rows with NaNs
+data.loc[pd.isnull(data.columnA)]
+
+replace nans with sg:
+df.column1 = df.column1.fillna('some_string')
+
+rename columns
+df.rename(columns={'oldName1': 'newName1', 'oldName2': 'newName2'}, inplace=True)
+
+change order of columns
+data2 = data2[['Profile Id', 'Profile Name', 'eventCategory', 'eventAction', 'eventLabel', 'date', 'deviceCategory', 'channelGrouping', 'UniqueEvents','BRAND_NAME', 'SUB_SECTOR_NAME']]
+
+group data by date (date is in datetime format)
+df.resample('M').mean()
+
+delete rows cointain string
+df.drop(df[df.ColumnA == "string"].index, inplace = True)
+
+see all columns, width of df
+pd.set_option('display.max_columns', 500)
+
+fill column with nan
+df["D"] = np.nan
+df["C"] = ""
+
+grand total
+df[["Jan","Feb","Mar","total"]].sum()
+
+
+*****************
+#Harangozó kolléga kód
+import pandas as pd
+matrix = pd.read_csv("transposed_lifestages_daily_sum_uniquevents_brand_by_source_matrix.csv", sep = ",", index_col = 0)
+
+matrix.columns
+matrix.index.values
+for row in matrix.index.values:
+    for column in matrix.columns:
+        print row, column, matrix.loc[row][column]
+*******************
+
+
+Excel -like features
+http://pbpython.com/excel-pandas-comp.html
+
+
+convert int to datetime
+df['DateTime'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y%m%d'))
+
+groupby month
+df.groupby(pd.TimeGrouper(freq='M'))
+
+groupby several columns
+group_data = df.groupby(['Alphabet','Words'])['COUNTER'].sum()
+
+count distinct
+df.groupby(['col1','col2'])['col3'].nunique().reset_index()
+
+trim
+df[0] = df[0].str.strip()
+
+replace name 
+nka['szekhely'].replace({'Hódmezovásárhely': 'Hódmezővásárhely'}, inplace=True, regex=True)
+
+unicode miatti rinya:
+df.replace({u'Fonyó Károly': u'Dr. Fonyó Károly'}, inplace=True, regex=True)
+
+
+print full value_counts:
+
+x = nka_hatarontuli["szekhely_strip"].value_counts()
+def print_full(x):
+    pd.set_option('display.max_rows', len(x))
+    print(x)
+    pd.reset_option('display.max_rows')
+print_full(x)
+
+dropna here a string is whatever:
+df.dropna(subset = ['column_name'])
+
+delete column
+del df[colname]
+
+scientific notation format
+pd.set_option('display.float_format', lambda x: '%.3f' % x)
+
+df.userid = df.userid.map(lambda x: '{:.0f}'.format(x))
+
+sort by value
+result = df.sort(['A', 'B'], ascending=[1, 0])
+
+concat dataframes
+concat = pd.concat([df1,df2,df3])
+
+new column with fix value
+df['Name'] = 'abc'
+
+if function
+data['negative'] =  data['tamogatas_osszege'].map(lambda x: 'negative' if x < 0 else 'positive')
+
+replace value based on other condition:
+data_erd["erdekeltseg"][data_erd["nev"].str.contains("Dél-balatoni agro", na=False, case=False)] = "Simicska-nyerges"
+
+merge strings with Nan
+df['ColA+ColB'] = df['ColA'].fillna('') + df['ColB'].fillna('')
+
+replace values
+df.columnA.replace(['value1', 'value2'], ['new_value1', 'new_value2'], inplace=True)
+
+multi indexing and sorting
+#data2.groupby(by=["link_domain"])["link_domain", "engagement_fb"].agg(['mean', 'count']).reset_index().sort_values([("engagement_fb", "mean")], ascending = False).head(20)
+
+give colum names
+data = pd.read_csv("path/to/file.txt", sep='\t', header=None)
+data.columns = ["Sequence", "Start", "End", "Coverage"]
+
+list_of_what = df["what"].tolist()
+
+check if list is in df:
+df[df['A'].isin([3, 6])]
+
+for index,row in df.iterrows():
+    if a < (row["year_avg"] - row["yerr1"]):
+          df.set_value(index,'position',"below")
+    elif (a > (row["year_avg"] + row["yerr1"])):
+          df.set_value(index,'position',"above")
+    else:
+          df.set_value(index,'position',"around")
+drop duplicates by column
+cpv.drop_duplicates(subset='wins_id', keep='last')
+
+reorder columns
+frame = frame[['column I want first', 'column I want second'...etc.]]
+
+count co ocurrences
+df.groupby(["Group", "Size"]).size()
+
+one liner for tableau format:
+pd.melt(df, id_vars=['A'], value_vars=['B', 'C'])
+
+remove new lines
+with open("/home/borbota/Documents/K_monitor/vitorlazas17/src/pdfek_atalakitva/kekszalag_2015_nyers.csv", "rb") as csvfile:
+    filtered = (line.replace('\n', ' ') for line in csvfile)
+    spamreader = csv.reader(filtered, delimiter=';')
