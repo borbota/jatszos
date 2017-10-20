@@ -57,27 +57,24 @@ df.ix["index label", 0]
 
 df.ix[1,"columna"]
 
-
 df.index.name = None
 
 merged = pd.merge(df_new, df_n, left_on='subject_id', right_on='subject_id', how = 'left')
 
 new_header = housing_2000.iloc[0] #grab the first row for the header
-    housing_2000 = housing_2000[1:] #take the data less the header row
+housing_2000 = housing_2000[1:] #take the data less the header row
 
 *********
-legnth of df: len(df.index)
+legnth of df
+len(df.index)
 
 list of column names: list(my_dataframe.columns.values)
 
 merge(left, right, how='inner', on=None, left_on=user, right_on=Id, left_index=False, right_index=False, sort=True, suffixes=('_x', '_y'), copy=True, indicator=False)
 
-outer =!
-
-pd.merge(utak, ertekelesek, how='inner', on=None, left_on='Id', right_on='user', left_index=True, right_index=False, sort=False, copy=False)
+pd.merge(df1, df2, how='inner',left_on='Id', right_on='user', left_index=True, right_index=False, sort=False, copy=False)
 
 pd.merge(user, ert, left_on='user_id', right_on = 'user', how='outer')
-
 
 df['x'].str.lower()
 
@@ -94,8 +91,6 @@ df.drop(df[df.ColumnA == "string"].index)
 delete rows with missing values in given row:
 data.dropna(subset = ['columnA'])
 
-Peti 
-# ezt kellene hasznalni
 plot
 data.groupby(['year']).agg({'id':'count', 'final':'sum'}).plot(kind = 'bar')
 
@@ -119,7 +114,7 @@ ignore NaNs:
 df.loc[df.a.str.contains("foo", na=False)]
 
 case insensitive:
-gtin[gtin['BRAND_NAME'].str.contains("AZDent", case = False)]
+gtin[gtin['BRAND_NAME'].str.contains("brand_name_x", case = False)]
 
 list of columns
 list(my_dataframe.columns.values)
@@ -177,9 +172,7 @@ df[["Jan","Feb","Mar","total"]].sum()
 
 
 *****************
-#Harangozó kolléga kód
-import pandas as pd
-matrix = pd.read_csv("transposed_lifestages_daily_sum_uniquevents_brand_by_source_matrix.csv", sep = ",", index_col = 0)
+matrix = pd.read_csv("transposed_matrix.csv", sep = ",", index_col = 0)
 
 matrix.columns
 matrix.index.values
@@ -187,11 +180,8 @@ for row in matrix.index.values:
     for column in matrix.columns:
         print row, column, matrix.loc[row][column]
 *******************
-
-
 Excel -like features
 http://pbpython.com/excel-pandas-comp.html
-
 
 convert int to datetime
 df['DateTime'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y%m%d'))
@@ -212,11 +202,9 @@ replace name
 nka['szekhely'].replace({'Hódmezovásárhely': 'Hódmezővásárhely'}, inplace=True, regex=True)
 
 unicode miatti rinya:
-df.replace({u'Fonyó Károly': u'Dr. Fonyó Károly'}, inplace=True, regex=True)
-
+df.replace({u'Akármi': u'Dr. Akármi'}, inplace=True, regex=True)
 
 print full value_counts:
-
 x = nka_hatarontuli["szekhely_strip"].value_counts()
 def print_full(x):
     pd.set_option('display.max_rows', len(x))
@@ -245,10 +233,10 @@ new column with fix value
 df['Name'] = 'abc'
 
 if function
-data['negative'] =  data['tamogatas_osszege'].map(lambda x: 'negative' if x < 0 else 'positive')
+data['negative'] =  data['sume'].map(lambda x: 'negative' if x < 0 else 'positive')
 
 replace value based on other condition:
-data_erd["erdekeltseg"][data_erd["nev"].str.contains("Dél-balatoni agro", na=False, case=False)] = "Simicska-nyerges"
+data["company"][data["name"].str.contains("whatever string", na=False, case=False)] = "whatever other string"
 
 merge strings with Nan
 df['ColA+ColB'] = df['ColA'].fillna('') + df['ColB'].fillna('')
@@ -275,6 +263,7 @@ for index,row in df.iterrows():
           df.set_value(index,'position',"above")
     else:
           df.set_value(index,'position',"around")
+
 drop duplicates by column
 cpv.drop_duplicates(subset='wins_id', keep='last')
 
@@ -288,6 +277,6 @@ one liner for tableau format:
 pd.melt(df, id_vars=['A'], value_vars=['B', 'C'])
 
 remove new lines
-with open("/home/borbota/Documents/K_monitor/vitorlazas17/src/pdfek_atalakitva/kekszalag_2015_nyers.csv", "rb") as csvfile:
+with open("my_file.csv", "rb") as csvfile:
     filtered = (line.replace('\n', ' ') for line in csvfile)
     spamreader = csv.reader(filtered, delimiter=';')
