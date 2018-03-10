@@ -1,0 +1,6 @@
+Source	Target	Weight
+eu	közlekedés	3
+eu	önkormányzat	4
+útépítés	közbeszerzés	1
+útépítés	építőipar	1
+eu	támogatás	14
