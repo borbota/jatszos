@@ -38,6 +38,9 @@ df.loc[df.columna == "whatever", "columnb"]
 use several where:
 df.loc[(df["B"] > 50) & (df["C"] == 900), "A"]
 
+select except
+df[df["col"].str.contains('this|that')==False]
+
 ***************
 ILOC - filtering rows and columns by integer position
 - exclusive for second value
