@@ -93,6 +93,7 @@ df.drop(df[df.ColumnA == "string"].index)
 
 delete rows with missing values in given row:
 data.dropna(subset = ['columnA'])
+df.dropna(subset = ['column1_name', 'column2_name', 'column3_name'])
 
 plot
 data.groupby(['year']).agg({'id':'count', 'final':'sum'}).plot(kind = 'bar')
