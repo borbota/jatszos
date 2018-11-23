@@ -123,8 +123,14 @@ gtin[gtin['BRAND_NAME'].str.contains("brand_name_x", case = False)]
 list of columns
 list(my_dataframe.columns.values)
 
+replace stuff in columns
+myfile.columns = myfile.columns.str.replace(' ','_').str.lower()
+
 remove whitespaces from header
 shorter.rename(columns=lambda x: x.replace(" ", "_"), inplace=True)
+
+add prefix to columns
+myfile = myfile.add_prefix("prefix_")
 
 count values of column
 data['columnA'].value_counts()
@@ -146,7 +152,10 @@ df = df[['a', 'y', 'b', 'x']]
 count distinict
 len(data["columnA"].unique())
 
-show rows with NaNs
+show rows with Nans
+df[df.isnull().any(axis=1)]
+
+show rows with NaNs in a given column
 data.loc[pd.isnull(data.columnA)]
 
 replace nans with sg:
