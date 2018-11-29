@@ -41,6 +41,11 @@ df.loc[(df["B"] > 50) & (df["C"] == 900), "A"]
 select except
 df[df["col"].str.contains('this|that')==False]
 
+show duplicate rows – will only show the second duplicate
+df["is_duplicate"] = df.duplicated()
+df.loc[df.is_duplicate == True]
+del df["is_duplicate"]
+
 ***************
 ILOC - filtering rows and columns by integer position
 - exclusive for second value
@@ -293,3 +298,15 @@ remove new lines
 with open("my_file.csv", "rb") as csvfile:
     filtered = (line.replace('\n', ' ') for line in csvfile)
     spamreader = csv.reader(filtered, delimiter=';')
+    
+    
+apply function
+def my_function(df):
+    if whatever:
+        retrun x
+    elif whatever:
+        return y
+    else:
+        return x
+
+mydf['new_column'] = mydf.apply(my_function, axis=1)
