@@ -146,6 +146,9 @@ data['columnA'].value_counts().sort_index()
 convert str to date:
 df['col'] = pd.to_datetime(df['col'])
 
+convert float to str
+df["id"] = df["id"].apply(str)
+
 to_datetime(shorter['Day'])
 
 groupby sum:
