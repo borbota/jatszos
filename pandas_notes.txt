@@ -38,6 +38,9 @@ df.loc[df.columna == "whatever", "columnb"]
 use several where:
 df.loc[(df["B"] > 50) & (df["C"] == 900), "A"]
 
+show rows containing substring
+df.loc[df.columna.str.contains("mystring")]
+
 select except
 df[df["col"].str.contains('this|that')==False]
 
