@@ -103,8 +103,6 @@ delete rows with missing values in given row:
 data.dropna(subset = ['columnA'])
 df.dropna(subset = ['column1_name', 'column2_name', 'column3_name'])
 
-plot
-data.groupby(['year']).agg({'id':'count', 'final':'sum'}).plot(kind = 'bar')
 
 groupby several values:
 df = df.groupby(['pidx','pidy']).agg({'flag':'first', 'count':'sum'}).reset_index()
@@ -330,3 +328,88 @@ df = DataFrame(my_query.fetchall())
 df.columns = my_query.keys()
 df.head()
 connection.close()
+
+
+calculate time difference between rows
+df['delta'] = (df['tvalue']-df['tvalue'].shift()).fillna(0)
+
+calculate time difference between rows by groups
+df_sorted = df.sort_values(["session_id", "date2"])
+df_sorted['delta'] = df_sorted.groupby('session_id')['date2'].diff()
+
+
+
+*************************
+plotting
+plot
+data.groupby(['year']).agg({'id':'count', 'final':'sum'}).plot(kind = 'bar')
+
+plot average line
+plt.axhline(stuff, color = "red")
+
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import *
+import matplotlib.dates as mdates
+fig, ax = subplots()
+
+data.groupby([pd.Grouper(key='date', freq='D'), 'airline_sentiment']).size().unstack().plot(figsize=(15,7), \
+  color = ['#FF860C', 'grey', '#0080FF'], linewidth = 2, ax = ax)
+ax.xaxis.set_major_locator(mdates.DayLocator(interval = 3))
+ax.set_ylabel("number of tweets")
+ax.spines['top'].set_visible(False) # remove frame
+ax.legend(loc='upper left') # legend in upper left corner
+plt.xticks(fontsize = 14, rotation=45) # rotate labels and fontsize
+
+colors
+https://matplotlib.org/examples/color/named_colors.html
+
+plots next to each other
+fig, axs = plt.subplots(1,2, figsize=(15, 5))
+1: ax = search_merged.plot(x="day", y="zero_results_rate", kind="line", color = "black", ax=axs[0])
+2: ax = search_merged.plot(x="day", y="zero_results_rate", kind="line", color = "black", ax=axs[1])
+
+rotate labels for both plots
+for ax in fig.axes:
+    matplotlib.pyplot.sca(ax)
+    plt.xticks(rotation=90);
+
+remove y ticks
+ax.set_yticklabels([]) # remove y values
+ax.tick_params(bottom="off", left="off") # remove ticks
+
+
+df1 = df.iloc[::-1] # revers df to have it in alphabetical order
+my_colors = ["darkorange", "dodgerblue"]  # version 6
+ax = df1.plot(kind='barh',stacked=True, figsize=(10, 7), color=my_colors)
+ax.set_ylabel('') # remove y axis title
+ax.spines['top'].set_visible(False) # remove frame # remove box
+ax.spines['bottom'].set_visible(False) # remove frame
+ax.spines['left'].set_visible(False) # remove frame
+ax.spines['right'].set_visible(False) # remove frame 
+ax.axvline(45, color='black', label = "health quangos average") # add lines average
+ax.axvline(50.1, color='grey', linestyle = "--", label = "national average")
+ax.legend(loc='center',  bbox_to_anchor=(1.1, 0.5)) # legend in upper left corner;
+#ax.figure.savefig('../exports/health/institute_gender_v6_with_national_average_for_text.png', bbox_inches='tight', pad_inches=0.1,
+#        frameon=None, dpi=400)
+;
+
+add labels to bar charts
+for rect in ax.patches:
+    height = rect.get_height()
+    ax.text(rect.get_x() + rect.get_width()/2., height, '%d' % int(height), ha='center', va='bottom')
+
+labels for horizontal bar charts (barh)
+for i in ax.patches:
+    # get_width pulls left or right; get_y pushes up or down
+    ax.text(i.get_width()+.5, i.get_y(), int(i.get_width()), ha='center')
+
+	original line: ax.text(i.get_width()+.3, i.get_y()+.38, \
+            str(round((i.get_width()/total)*100, 2))+'%', fontsize=15, color='dimgrey')
+            
+treemap
+import squarify
+import matplotlib.pyplot as plt 
+squarify.plot(sizes=df['count'], label=df['group'], alpha=.8 )
+plt.axis('off')
+plt.show()
+*************************
