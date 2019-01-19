@@ -363,6 +363,9 @@ plt.xticks(fontsize = 14, rotation=45) # rotate labels and fontsize
 colors
 https://matplotlib.org/examples/color/named_colors.html
 
+seaborn colormaps
+https://gallantlab.github.io/colormaps.html
+
 plots next to each other
 fig, axs = plt.subplots(1,2, figsize=(15, 5))
 1: ax = search_merged.plot(x="day", y="zero_results_rate", kind="line", color = "black", ax=axs[0])
