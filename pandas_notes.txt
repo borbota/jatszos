@@ -167,6 +167,9 @@ df[df.isnull().any(axis=1)]
 show rows with NaNs in a given column
 data.loc[pd.isnull(data.columnA)]
 
+show rows with NOT NaNs in a given column
+data.loc[pd.notnull(data.columnA)]
+
 replace nans with sg:
 df.column1 = df.column1.fillna('some_string')
 
