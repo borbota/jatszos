@@ -279,7 +279,8 @@ data.columns = ["Sequence", "Start", "End", "Coverage"]
 list_of_what = df["what"].tolist()
 
 check if list is in df:
-df[df['A'].([3, 6])]
+df[df['A'].isin([3, 6])]
+
 
 list not in df:
 df[~df.column.isin(mylist)]
