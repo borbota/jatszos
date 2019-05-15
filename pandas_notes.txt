@@ -195,6 +195,18 @@ df["C"] = ""
 grand total
 df[["Jan","Feb","Mar","total"]].sum()
 
+***
+functions in pandas with apply
+def my_function(df):
+   
+    if df["whatever_column"] == "x":
+        return some value
+    elif df["whatever_column"] == "y":
+        return another some value
+    else:
+        pass
+df["my_new_column"] = df.apply(my_function, axis=1)
+***
 
 *****************
 matrix = pd.read_csv("transposed_matrix.csv", sep = ",", index_col = 0)
