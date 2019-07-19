@@ -117,6 +117,15 @@ def rescale(input_array):
     return output_array
 
 *********
+replace and convert numbers
+# format of original object: 1.200
+def to_numeric(column):
+    df[column] = df[column].apply(lambda x: x.replace('-', '0')) # assuming that 0 are ok for the NaNs
+    df[column] = df[column].str.replace('.', '', regex=True).astype(int)
+
+for column in object_to_numeric_column_list:
+    to_numeric(column)
+*********
 looking for partial string:
 df[df['A'].str.contains("hello")]
 
