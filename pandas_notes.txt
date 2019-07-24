@@ -443,4 +443,69 @@ import matplotlib.pyplot as plt
 squarify.plot(sizes=df['count'], label=df['group'], alpha=.8 )
 plt.axis('off')
 plt.show()
+
 *************************
+convert "2019-12" YYYY-WW to days, ie. get first and last day of week
+
+
+def get_days(x):
+    year = int(("2019-26").split("-")[0])
+    week = int(("2019-26").split("-")[1])
+    d = date(year,1,1)
+    d = d - timedelta(d.weekday())
+    dlt = timedelta(days = (week-1)*7)
+    first_day = d + dlt
+    last_day = d + dlt + timedelta(days=6)
+    monday = first_day.strftime("%Y-%m-%d")
+    sunday = last_day.strftime("%Y-%m-%d")
+    return monday, sunday
+df["monday"], df["sunday"] = zip(*df["year_week"].map(get_days))
+
+*************************
+Salesforce data download
+
+import os
+import time
+timestr = time.strftime("%Y%m%d")
+
+# set in the environment
+os.environ["password"] = "whatever"
+os.environ["client_id"] = "whatever"
+os.environ["client_secret"] = "whatever"
+os.environ["username"] = "whatever"
+
+
+# download data from Salesforce Rest API
+def salesforce_to_json():
+    params_sbox = {"grant_type": "password",
+    "client_id" : os.environ.get("client_id"),
+    "client_secret": os.environ.get("client_secret"), # Consumer Secret
+    "username": os.environ.get("username"), # The email to login
+    "password": os.environ.get("password") # Concat password and security token
+    }
+
+    headers = {
+            'content-type': 'application/x-www-form-urlencoded'
+            }
+    
+    r = requests.post("MYSALESFORCEDOMAIN/services/oauth2/token",\
+        params= params_sbox, headers = headers)
+    access_token = r.json().get("access_token")
+    instance_url = r.json().get("instance_url")
+    session_id = r.json().get("id")
+
+    cookie = {"sid": session_id}
+    header = {"Authorization": "Bearer %s" % access_token}
+    report_url = "MYSALESFORCEDOMAIN/services/data/v44.0/analytics/reports/MYREPORTID"
+
+    report = requests.get(report_url, headers = header, cookies = cookie)
+
+    data = report.json()
+
+    with open('/tmp/report_' + str(timestr) + '.json', 'w') as outfile:
+        json.dump(data, outfile)
+        
+salesforce_to_json()
+
+*************************
+
