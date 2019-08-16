@@ -343,19 +343,23 @@ def my_function(df):
 
 mydf['new_column'] = mydf.apply(my_function, axis=1)
 
+************
 MySQL
 from pandas import DataFrame
 from sqlalchemy.engine import create_engine
 
-engine = create_engine("mysql+pymysql://USERNAME:PASSWORD@HOST/DATABASE?charset=utf8mb4")
 # dialect+driver://username:password@host:port/database
+engine = create_engine("mysql+pymysql://USERNAME:PASSWORD@HOST/DATABASE?charset=utf8mb4")
 
 connection = engine.connect()
 connection.execute("SELECT * FROM table WHERE LOWER(name) NOT LIKE '%%whatnot%%';")
 df = DataFrame(my_query.fetchall())
 df.columns = my_query.keys()
-df.head()
 connection.close()
+engine.dispose()
+df.head()
+
+************
 
 
 calculate time difference between rows
