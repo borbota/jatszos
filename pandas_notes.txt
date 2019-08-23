@@ -352,11 +352,12 @@ from sqlalchemy.engine import create_engine
 engine = create_engine("mysql+pymysql://USERNAME:PASSWORD@HOST/DATABASE?charset=utf8mb4")
 
 connection = engine.connect()
-connection.execute("SELECT * FROM table WHERE LOWER(name) NOT LIKE '%%whatnot%%';")
-df = DataFrame(my_query.fetchall())
-df.columns = my_query.keys()
+results = connection.execute("SELECT * FROM table WHERE LOWER(name) NOT LIKE '%%whatnot%%';")
+df = DataFrame(results.fetchall())
+df.columns = results.keys()
 connection.close()
 engine.dispose()
+results.close()
 df.head()
 
 ************
