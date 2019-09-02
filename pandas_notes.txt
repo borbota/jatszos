@@ -150,6 +150,9 @@ myfile = myfile.add_prefix("prefix_")
 count values of column
 data['columnA'].value_counts()
 
+remove last characters in a column
+df['colname'] = df['colname'].map(lambda x: str(x)[:-4])
+
 with index sorted:
 data['columnA'].value_counts().sort_index()
 
