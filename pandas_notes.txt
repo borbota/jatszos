@@ -126,6 +126,15 @@ def to_numeric(column):
 for column in object_to_numeric_column_list:
     to_numeric(column)
 *********
+apply a function on two columns
+def myfunction(x, y):
+    if (x == "whatever") & (y == "another value"):
+        return 1
+    else:
+        return 0
+
+df["new_col"] = df.apply(lambda x: myfunction(x.col1, x.col2), axis=1)
+*********
 looking for partial string:
 df[df['A'].str.contains("hello")]
 
