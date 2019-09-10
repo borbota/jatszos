@@ -281,8 +281,8 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 df.userid = df.userid.map(lambda x: '{:.0f}'.format(x))
 
-sort by value
-result = df.sort(['A', 'B'], ascending=[1, 0])
+sort by two columns not ignoring NaNs
+df.sort(['A', 'B'], ascending=[True, False], na_position='first')
 
 concat dataframes
 concat = pd.concat([df1,df2,df3])
