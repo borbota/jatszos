@@ -134,7 +134,22 @@ def myfunction(x, y):
         return 0
 
 df["new_col"] = df.apply(lambda x: myfunction(x.col1, x.col2), axis=1)
+
 *********
+
+convert string to date
+datecolumn_list = ["mydate1", "mydate2"]
+
+def convert_sf_date(datecolumn):
+    df[datecolumn] = df[datecolumn].astype(str)
+    df[datecolumn] = df[datecolumn].apply(lambda x: x.strip()).replace('-', np.nan)
+    df[datecolumn] =  pd.to_datetime(df[datecolumn], format='%d/%m/%Y')
+    
+for datecolumn in datecolumn_list:
+    convert_sf_date(datecolumn)
+    
+*********
+
 looking for partial string:
 df[df['A'].str.contains("hello")]
 
