@@ -274,6 +274,9 @@ df[0] = df[0].str.strip()
 replace name 
 nka['szekhely'].replace({'Hódmezovásárhely': 'Hódmezővásárhely'}, inplace=True, regex=True)
 
+replace value based on condition
+df.loc[(df.column_where_condition_is == 'valuex'),'column_to_change']='new_value'
+
 unicode miatti rinya:
 df.replace({u'Akármi': u'Dr. Akármi'}, inplace=True, regex=True)
 
