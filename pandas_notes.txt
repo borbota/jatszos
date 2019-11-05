@@ -165,6 +165,19 @@ list(my_dataframe.columns.values)
 replace stuff in columns
 myfile.columns = myfile.columns.str.replace(' ','_').str.lower()
 
+replace all stuff in columns
+df.columns.str.replace('[^a-zA-Z]', '_').str.lower().str.replace('_+', '_')
+
+
+do something in columns in a massive scale:
+list_of_dfs = [df1, df2, df3]
+colstostrings_list = ["col1", "col2", "col3"]
+
+for df in list_of_dfs:
+    for col in colstostrings_list:
+        df[col] = df[col].apply(str)
+
+
 remove whitespaces from header
 shorter.rename(columns=lambda x: x.replace(" ", "_"), inplace=True)
 
@@ -561,3 +574,8 @@ salesforce_to_json()
              'tempo', 'temps', 'thermal', 'tropic', 'turbid', 'twilight',
              'viridis', 'ylgn', 'ylgnbu', 'ylorbr', 'ylorrd']
 
+*************************
+to create dummy variables
+to_dummify = pd.get_dummies(dff["to_be_dummy_col"])
+dff =  pd.concat([df, to_dummify], axis = 1)
+del dff["to_be_dummy_col"]
