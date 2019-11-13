@@ -1,3 +1,9 @@
+display options 
+https://pandas.pydata.org/pandas-docs/version/0.23/generated/pandas.set_option.html
+
+# do not truncate if df is smaller than 1000 rows
+pd.set_option('display.max_rows', 1000)
+
 df[df.ColumnA == "whatever"]
 - returns rows where ColumnA is whatever
 
