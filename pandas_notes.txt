@@ -142,6 +142,16 @@ def myfunction(x, y):
 df["new_col"] = df.apply(lambda x: myfunction(x.col1, x.col2), axis=1)
 
 *********
+def df_minimal_cleaning(df):
+    df.columns = df.columns.str.replace('[^a-zA-Z]', '_').str.lower().str.replace('_+', '_')
+    #prefix = df.name[0]
+    df.columns = [prefix + "_" + str(col) for col in df.columns]
+    for col in df.columns:
+        if "whatever" in col:
+            #do something
+    return df
+
+***********
 
 convert string to date
 datecolumn_list = ["mydate1", "mydate2"]
