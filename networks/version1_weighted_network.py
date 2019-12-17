@@ -61,6 +61,15 @@ for edge in G.edges:
             final_edges_list.append((node_dict[edge[0]], node_dict[edge[1]]))
 final_edges_list = np.asarray(final_edges_list)
 
+# https://community.plot.ly/t/show-edge-weight-in-network-graph/26733/2
+# add line weight tooltip
+xtp = []
+ytp = []
+for e in edges: 
+    xtp.append(0.5*(pos[e[0]][0]+ pos[e[1]][0]))
+    ytp.append(0.5*(pos[e[0]][1]+ pos[e[1]][1]))
+etext = [f'number of matchedvalues: {w}' for w in weights]
+
 nodes = dict(type='scatter',
            x=node_positions[:,0],
            y=node_positions[:,1],
@@ -76,7 +85,16 @@ edges_list= [dict(type='scatter',
              mode='lines',
              line=dict(color = "grey", width=weights[k]), opacity=0.5)  for k, e in enumerate(final_edges_list)]
 
-data = edges_list + [nodes]
+trace3 = [dict(type='scatter',
+           x=xtp,
+           y=ytp,
+           mode = 'markers',
+           #textposition="top center",
+           text = etext,
+           hoverinfo = 'text',
+           marker =dict(color='grey', size=1, opacity = 0.5))]
+
+data = edges_list + [nodes] + trace3
 
 fig = go.Figure(data = dict(data=data),
              layout=go.Layout())
