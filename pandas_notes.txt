@@ -289,6 +289,15 @@ convert int to datetime
 df['DateTime'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y%m%d'))
 
 groupby month
+df1 = df.set_index(["date"]) # date in datetime
+g = df1.groupby(pd.Grouper(freq="M"))
+g.size()
+
+OR 
+per = df.date.dt.to_period("M")
+h = df.groupby(per)
+h.size()
+
 df.groupby(pd.TimeGrouper(freq='M'))
 
 groupby several columns
