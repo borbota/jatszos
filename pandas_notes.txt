@@ -532,13 +532,15 @@ fig.add_trace(go.Choropleth(locations = df['country'],
                                     hovertemplate = "Out of one million citizens of %{text}, there are <br>" +
                                     "%{z:.} immigrants registered in Spain.<br>" +
                                     "<extra></extra>",
-                                    hoverlabel = dict(font = dict(size = 18)),
+                                    hoverlabel = dict(font = dict(size = 18), bgcolor = "hex_here"),
                                     showscale = False, visible = True))
 
 OR custom text
 hoverinfo = "text",
 		text = [str(country) + ", " + str(number) for (country, number) in df[['country', 'number']].values],
-		
+
+OR in older Plotly:
+text = ["blabla <br>" + str(text) + " is " + str(an_integer) + "<br>blabla <br>" + str(another_integer) + "." for (text, an_integer)  in df[['text', 'an_integer']].values],
 *************************
 convert "2019-12" YYYY-WW to days, ie. get first and last day of week
 
