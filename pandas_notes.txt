@@ -414,6 +414,23 @@ def my_function(df):
 
 mydf['new_column'] = mydf.apply(my_function, axis=1)
 
+
+remove non-char characters from header
+df.columns = df.columns.str.replace('[^a-zA-Z0-9]', '_').str.lower().str.replace('_+', '_')
+
+replace a part of a string in column
+df['new_column'] = df['column_name'].map(lambda x: x.replace('_unwanted_string_', ''))
+
+unpivot
+unpivoted = pd.melt(df, id_vars = ["city", "country"], \
+        value_vars = ["persons", "companies"], value_name = "numeric_value", var_name = "type")
+
+split a column into two
+df[["col_new_1", "col_new_2"]]= df["col_to_split"].str.split("delimiter", expand = True)
+
+convert currency string to float
+df["numeric_value"] = df["numeric_value_as_string"].str.replace('$', '', regex=True).str.replace(',', '', regex=True).astype(float) # ,. to be replaced depending how it looks like
+
 ************
 MySQL
 from pandas import DataFrame
